@@ -1,14 +1,14 @@
 import React from "react";
 
-const Categories = () => {
+const Categories = ({changeCategory,pizzaCategoryIndex}) => {
     const pizzas = ["Все", "Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"]
-    const [pizzaActiveIndex, setPizzaActiveIndex] = React.useState(0);
+
     return (
         <div className="categories">
             <ul>
                 {pizzas.map((el, index) => {
-                    return <li key={index} onClick={() => setPizzaActiveIndex(index)}
-                               className={pizzaActiveIndex === index ? 'active' : ''}>
+                    return <li key={index} onClick={() => changeCategory(index)}
+                               className={pizzaCategoryIndex === index ? 'active' : ''}>
                         {el}
                     </li>
                 })}

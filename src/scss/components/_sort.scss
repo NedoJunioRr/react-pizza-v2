@@ -1,6 +1,9 @@
 @import '../variables.scss';
 
 .sort {
+  @media (max-width: 1300px) {
+    padding-left: 20px;
+  }
   position: relative;
   &__label {
     display: flex;
@@ -29,7 +32,7 @@
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.09);
     border-radius: 10px;
     overflow: hidden;
-    padding: 10px 0;
+    //padding: 10px 0;
     width: 160px;
 
     ul {

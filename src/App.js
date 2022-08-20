@@ -1,34 +1,31 @@
 import React from "react";
 import './scss/App.scss';
 import Header from "./components/Header";
-import Categories from "./components/Categories";
-import Sort from "./components/Sort";
-import PizzaBlock from "./components/PizzaBlock";
-import pizzasObj  from "./pizzas.json"
+import {
+    Routes,
+    Route,
+} from "react-router-dom";
+
+import Home from "./components/Home";
+import NotFound from "./components/NotFound";
+import Cart from "./components/Cart";
 
 function App() {
-  const [pizzas, setPizzas] = React.useState(pizzasObj)
-  return (
-    <div className="App">
-      <div className="wrapper">
-        <Header/>
-        <div className="content">
-          <div className="container">
-            <div className="content__top">
-              <Categories/>
-              <Sort/>
+
+    return (
+        <div className="App">
+            <div className="wrapper">
+                <Header/>
+                <div className="content">
+                    <Routes>
+                        <Route path='/' element={<Home/>}/>
+                        <Route path='*' element={<NotFound/>}/>
+                        <Route path='/cart' element={<Cart/>}/>
+                    </Routes>
+                </div>
             </div>
-            <h2 className="content__title">Все пиццы</h2>
-            <div className="content__items">
-              {pizzas.map(obj=>{
-                return <PizzaBlock {...obj}/>
-              })}
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default App;

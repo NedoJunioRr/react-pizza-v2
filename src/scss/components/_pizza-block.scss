@@ -5,12 +5,19 @@
   text-align: center;
   margin-bottom: 65px;
 
-  &:not(:nth-of-type(4n)) {
-    margin-right: 35px;
+  &-wrapper{
+    justify-content: center;
+    display: flex;
+    @media (max-width: 400px) {
+      width: 90%;
+    }
   }
 
   &__image {
     width: 260px;
+    @media (max-width: 380px) {
+      width: 243px;
+    }
   }
 
   &__title {
