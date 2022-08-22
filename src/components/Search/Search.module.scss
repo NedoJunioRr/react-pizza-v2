@@ -1,0 +1,29 @@
+.root{
+
+  width: 350px;
+  position: relative;
+  right: 100px;
+}
+
+.icon{
+  position: absolute;
+  left: 25px;
+  top: 7px;
+}
+
+.input{
+  transition: 0.5s;
+  border-radius: 10px;
+  padding:5px 0 5px 40px;
+  border: 1px solid gray;
+}
+
+.input:focus{
+  padding:10px 0 10px 40px;
+}
+
+.close{
+  position: absolute;
+  right: 160px;
+  top: 7px;
+}

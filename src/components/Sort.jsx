@@ -3,9 +3,12 @@ import { useState} from "react";
 const Sort = ({changeSortItem,value,setSortValue}) => {
     const [sortPop, setSortPop] = useState(false)
     const categories = [
-        {name:'Популярности',property:'rating'},
-        {name:'Цене',property: 'price'},
-        {name:'Алфавиту',property: 'title'}
+        {name:'Популярности(desc)',property:'rating'},
+        {name:'Популярности(asc)',property:'-rating'},
+        {name:'Цене(desc)',property: 'price'},
+        {name:'Цене(asc)',property: '-price'},
+        {name:'Алфавиту(desc)',property: 'title'},
+        {name:'Алфавиту(asc)',property: '-title'}
     ];
     const sortName = categories[value].name
 

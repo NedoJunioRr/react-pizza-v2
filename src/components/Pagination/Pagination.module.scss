@@ -1,0 +1,25 @@
+.root{
+    display:flex;
+    gap: 1rem;
+    :global{
+        li{
+            border-radius: 30px;
+            border: 2px solid gray;
+            padding: 5px;
+            background-color: red;
+            height: 40px;
+            width: 40px;
+            &:hover{
+                background-color: orange;
+            }
+        }
+        .selected{
+            background-color: orange;
+        }
+        li a{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}
