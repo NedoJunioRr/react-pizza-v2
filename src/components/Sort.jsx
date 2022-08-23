@@ -1,6 +1,13 @@
 import { useState} from "react";
+import {setSortNumber, setSortValue} from "../features/featureSlice";
+import {useDispatch, useSelector} from "react-redux";
 
-const Sort = ({changeSortItem,value,setSortValue}) => {
+const Sort = () => {
+    const dispatch = useDispatch()
+
+    const sortValue = useSelector((state)=>state.featureSlice.sort.value)
+    const selectItem = useSelector((state)=>state.featureSlice.sort.number)
+
     const [sortPop, setSortPop] = useState(false)
     const categories = [
         {name:'Популярности(desc)',property:'rating'},
@@ -10,12 +17,12 @@ const Sort = ({changeSortItem,value,setSortValue}) => {
         {name:'Алфавиту(desc)',property: 'title'},
         {name:'Алфавиту(asc)',property: '-title'}
     ];
-    const sortName = categories[value].name
+    const sortName = categories[selectItem].name
 
     const activeCategories = (i) => {
-        changeSortItem(i)
+        dispatch(setSortNumber(i))
         setSortPop(false)
-        setSortValue(categories[i].property)
+        dispatch(setSortValue(categories[i].property))
     }
 
 
@@ -41,7 +48,7 @@ const Sort = ({changeSortItem,value,setSortValue}) => {
                 <ul>
                     {sortPop && categories.map((el, i) => {
                         return <li onClick={() => activeCategories(i)}  key={i}
-                                   className={value === i ? 'active' : ''}>{el.name}</li>
+                                   className={selectItem === i ? 'active' : ''}>{el.name}</li>
                     })}
                 </ul>
             </div>
