@@ -1,22 +1,24 @@
-import { useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {setSortNumber, setSortValue} from "../features/featureSlice";
 import {useDispatch, useSelector} from "react-redux";
+export const categories = [
+    {name:'Популярности(desc)',property:'rating'},
+    {name:'Популярности(asc)',property:'-rating'},
+    {name:'Цене(desc)',property: 'price'},
+    {name:'Цене(asc)',property: '-price'},
+    {name:'Алфавиту(desc)',property: 'title'},
+    {name:'Алфавиту(asc)',property: '-title'}
+];
 
 const Sort = () => {
     const dispatch = useDispatch()
+    const sortRef=useRef()
 
     const sortValue = useSelector((state)=>state.featureSlice.sort.value)
     const selectItem = useSelector((state)=>state.featureSlice.sort.number)
 
     const [sortPop, setSortPop] = useState(false)
-    const categories = [
-        {name:'Популярности(desc)',property:'rating'},
-        {name:'Популярности(asc)',property:'-rating'},
-        {name:'Цене(desc)',property: 'price'},
-        {name:'Цене(asc)',property: '-price'},
-        {name:'Алфавиту(desc)',property: 'title'},
-        {name:'Алфавиту(asc)',property: '-title'}
-    ];
+
     const sortName = categories[selectItem].name
 
     const activeCategories = (i) => {
@@ -25,9 +27,22 @@ const Sort = () => {
         dispatch(setSortValue(categories[i].property))
     }
 
+    useEffect(()=>{
+        const handleClick = (event) => {
+            if(!event.path.includes(sortRef.current)){
+                setSortPop(false)
+            }
+        }
+        document.body.addEventListener('click',handleClick)
+        return () =>{
+             document.body.removeEventListener('click',handleClick)
+        }
+
+    },[])
+
 
     return (
-        <div className="sort">
+        <div className="sort" ref={sortRef}>
             <div className="sort__label">
                 <svg
                     width="10"
