@@ -2,6 +2,8 @@ import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {addItems} from "../../features/cartSlice";
 
+const typesPizzas = ["тонкое", "традиционное"];
+
 const PizzaBlock = ({id, title, types, imageUrl, sizes, price,}) => {
     const cartItem = useSelector(state=>state.cart.items.find(el=>el.id===id))
     const addedItem = cartItem?cartItem.count:0
@@ -22,7 +24,7 @@ const PizzaBlock = ({id, title, types, imageUrl, sizes, price,}) => {
 
 
     const [activeType, setActiveType] = React.useState(0)
-    const typesPizzas = ["тонкое", "традиционное"];
+
     const [activeSize, setActiveSize] = React.useState(0)
     return (
         <div className="pizza-block-wrapper">
@@ -40,7 +42,7 @@ const PizzaBlock = ({id, title, types, imageUrl, sizes, price,}) => {
                     </ul>
                     <ul>
                         {sizes.map((el,i) => <li key={i} onClick={() => setActiveSize(el)}
-                                               className={activeSize === el ? 'active' : ''}>{`${el}см`}</li>)}
+                                               className={activeSize === el ? 'active' : ''}>{el}см</li>)}
                     </ul>
                 </div>
                 <div className="pizza-block__bottom">

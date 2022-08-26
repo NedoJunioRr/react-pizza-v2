@@ -2,11 +2,19 @@ import React from 'react';
 import CartItem from "./CartItem";
 import {useDispatch, useSelector} from "react-redux";
 import {clearItems} from "../features/cartSlice";
+import EmptyCart from "./EmptyCart";
+
 
 const Cart = () => {
     const items = useSelector(state => state.cart.items)
+    const {totalPrice} = useSelector(state => state.cart)
     const dispatch = useDispatch()
 
+    if(!totalPrice){
+        return <EmptyCart/>
+    }
+
+    const totalCount = items.reduce((acc,el)=>acc+el.count,0)
     return (
         <div className="cart">
             <div className="cart__top">
@@ -24,7 +32,7 @@ const Cart = () => {
                     </svg>
                     Корзина
                 </h2>
-                <div className="cart__clear">
+                <div className="cart__clear" onClick={()=>dispatch(clearItems())}>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M2.5 5H4.16667H17.5" stroke="#B6B6B6" strokeWidth="1.2" strokeLinecap="round"
                               strokeLinejoin="round"/>
@@ -37,7 +45,7 @@ const Cart = () => {
                               strokeLinejoin="round"/>
                     </svg>
 
-                    <span onClick={()=>dispatch(clearItems())}>Очистить корзину</span>
+                    <span >Очистить корзину</span>
                 </div>
             </div>
             <div className="content__items">
@@ -47,8 +55,8 @@ const Cart = () => {
             </div>
             <div className="cart__bottom">
                 <div className="cart__bottom-details">
-                    <span> Всего пицц: <b>3 шт.</b> </span>
-                    <span> Сумма заказа: <b>900 ₽</b> </span>
+                    <span> Всего пицц: <b>{totalCount} шт.</b> </span>
+                    <span> Сумма заказа: <b>{totalPrice}</b> </span>
                 </div>
                 <div className="cart__bottom-buttons">
                     <a href="/" className="button button--outline button--add go-back-btn">

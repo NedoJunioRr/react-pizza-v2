@@ -1,9 +1,8 @@
 import React from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {addItems, clearItems, minusItem, removeItem} from "../features/cartSlice";
+import {useDispatch} from "react-redux";
+import {addItems, minusItem, removeItem} from "../features/cartSlice";
 
-const CartItem = ({id, title, type, price, count, imageUrl}) => {
-    const items = useSelector(state=>state.items)
+const CartItem = ({id, title, type, price, count, imageUrl,size}) => {
     const dispatch = useDispatch();
     const onClickAdd = () => {
         dispatch(addItems({
@@ -16,6 +15,7 @@ const CartItem = ({id, title, type, price, count, imageUrl}) => {
     }
 
     const onClickRemoveItem = () => {
+        window.confirm('Are you sure you want to remove?')
         dispatch(removeItem(id))
     }
 
@@ -30,7 +30,7 @@ const CartItem = ({id, title, type, price, count, imageUrl}) => {
             </div>
             <div className="cart__item-info">
                 <h3>{title}</h3>
-                <p>{type}, 26 см.</p>
+                <p>{type}, {size} см.</p>
             </div>
             <div className="cart__item-count">
                 <div className="button button--outline button--circle cart__item-count-minus" onClick={onClickMinus}>
