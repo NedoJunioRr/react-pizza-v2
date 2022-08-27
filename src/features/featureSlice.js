@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit'
 
 
 const initialState = {
+    searchValue:'',
     pizzaCategoryIndex: 0,
     sort: {number: 0, value: 'rating'},
     currentPage: 1,
@@ -11,6 +12,9 @@ export const featureSlice = createSlice({
     name: 'filterId',
     initialState,
     reducers: {
+        setSearchValue(state,action){
+            state.searchValue = action.payload
+        },
         setCategoryId(state, action) {
             state.pizzaCategoryIndex = action.payload
         },
@@ -31,6 +35,6 @@ export const featureSlice = createSlice({
     }
 })
 
-export const {setCategoryId, setSortValue, setSortNumber, setCurrentPage, setFilter} = featureSlice.actions
+export const {setCategoryId, setSortValue, setSortNumber, setCurrentPage, setFilter,setSearchValue} = featureSlice.actions
 
 export default featureSlice.reducer

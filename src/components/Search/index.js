@@ -4,12 +4,13 @@ import styles from './Search.module.scss'
 import {AiOutlineClose} from "react-icons/ai";
 import debounce from 'lodash.debounce'
 import {SearchContext} from "../../App";
+import {useDispatch} from "react-redux";
+import {setSearchValue} from "../../features/featureSlice";
 
 const Search = () => {
 
+    const dispatch = useDispatch()
     const [inputValue,setInputValue] = useState('');
-
-    const {searchValue,setSearchValue} = useContext(SearchContext)
 
 
 
@@ -22,7 +23,7 @@ const Search = () => {
 
     const changeInputValue =  useCallback(
         debounce(string=> {
-        setSearchValue(string)
+        dispatch(setSearchValue(string))
     },500), [])
 
     const onChangeInput = (event) =>{

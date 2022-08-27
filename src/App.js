@@ -9,6 +9,7 @@ import {
 import Home from "./components/Home";
 import NotFound from "./components/NotFound";
 import Cart from "./components/Cart";
+import PizzaForId from "./components/PizzaForId";
 
 
 export const SearchContext = React.createContext();
@@ -17,20 +18,19 @@ export const SearchContext = React.createContext();
 function App() {
 
 
-    const [searchValue, setSearchValue] = React.useState('')
+
     return (
         <div className="App">
             <div className="wrapper">
-                <SearchContext.Provider value={{searchValue,setSearchValue}}>
                     <Header />
                     <div className="content">
                         <Routes>
-                            <Route path='/' element={<Home searchValue={searchValue}/>}/>
+                            <Route path='/' element={<Home/>}/>
+                            <Route path='/pizza/:id' element={<PizzaForId/>}/>
                             <Route path='*' element={<NotFound/>}/>
                             <Route path='/cart' element={<Cart/>}/>
                         </Routes>
                     </div>
-                </SearchContext.Provider>
             </div>
         </div>
     );

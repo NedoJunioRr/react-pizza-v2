@@ -23,6 +23,9 @@ body {
   &__title {
     margin: 35px 0;
   }
+  &__error-info{
+    margin: 60px;
+  }
 
   &__items {
     display: grid;

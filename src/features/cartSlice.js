@@ -36,7 +36,10 @@ export const cartSlice = createSlice({
             state.totalPrice=0;
         }
     }
+
 })
+
+export const cartItemById = id =>state=>state.cart.items.find(el=>el.id===id)
 
 export const {addItems, removeItem, clearItems, minusItem} = cartSlice.actions
 

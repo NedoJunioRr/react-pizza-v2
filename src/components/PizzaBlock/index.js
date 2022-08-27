@@ -1,11 +1,11 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addItems} from "../../features/cartSlice";
+import {addItems, cartItemById} from "../../features/cartSlice";
 
 const typesPizzas = ["тонкое", "традиционное"];
 
 const PizzaBlock = ({id, title, types, imageUrl, sizes, price,}) => {
-    const cartItem = useSelector(state=>state.cart.items.find(el=>el.id===id))
+    const cartItem = useSelector(cartItemById(id))
     const addedItem = cartItem?cartItem.count:0
     const dispatch = useDispatch()
     const onClickAdd = () => {
