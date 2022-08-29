@@ -1,6 +1,11 @@
 import React from "react";
 
-const Categories = ({changeCategory,pizzaCategoryIndex}) => {
+type CategoriesProps = {
+    changeCategory: (i:number)=>void,
+    pizzaCategoryIndex:number
+}
+
+const Categories:React.FC<CategoriesProps> = ({changeCategory, pizzaCategoryIndex}) => {
     const pizzas = ["Все", "Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"]
 
     return (

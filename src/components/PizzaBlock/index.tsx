@@ -1,27 +1,31 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addItems, cartItemById} from "../../features/cartSlice";
+import {addItems, cartItemById, CartItemValues} from "../../features/cartSlice";
+import {Link} from "react-router-dom";
+
 
 const typesPizzas = ["тонкое", "традиционное"];
 
-const PizzaBlock = ({id, title, types, imageUrl, sizes, price,}) => {
+type PropsPizzaBlock = {id:string, title:string, types:number[], imageUrl:string, sizes:number[], price:number}
+
+const PizzaBlock:React.FC<PropsPizzaBlock> = ({id, title, types, imageUrl, sizes, price,}) => {
     const cartItem = useSelector(cartItemById(id))
-    const addedItem = cartItem?cartItem.count:0
+    const addedItem = cartItem ? cartItem.count : 0
     const dispatch = useDispatch()
+
+
     const onClickAdd = () => {
-        const item = {
+        const item:CartItemValues = {
             id,
             title,
             price,
             imageUrl,
-            type:typesPizzas[activeType],
-            size:activeSize
+            type: typesPizzas[activeType],
+            size: activeSize,
+            count: 0
         }
         dispatch(addItems(item))
     }
-
-
-
 
     const [activeType, setActiveType] = React.useState(0)
 
@@ -29,20 +33,22 @@ const PizzaBlock = ({id, title, types, imageUrl, sizes, price,}) => {
     return (
         <div className="pizza-block-wrapper">
             <div className="pizza-block">
-                <img
-                    className="pizza-block__image"
-                    src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-                    alt="Pizza"
-                />
+                <Link to={`/pizza/${id}`}>
+                    <img
+                        className="pizza-block__image"
+                        src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
+                        alt="Pizza"
+                    />
                 <h4 className="pizza-block__title">{title}</h4>
+                </Link>
                 <div className="pizza-block__selector">
                     <ul>
-                        {types.map((el,i) => <li key={i} onClick={() => setActiveType(el)}
-                                               className={activeType === el ? 'active' : ''}>{typesPizzas[el]}</li>)}
+                        {types.map((el, i) => <li key={i} onClick={() => setActiveType(el)}
+                                                  className={activeType === el ? 'active' : ''}>{typesPizzas[el]}</li>)}
                     </ul>
                     <ul>
-                        {sizes.map((el,i) => <li key={i} onClick={() => setActiveSize(el)}
-                                               className={activeSize === el ? 'active' : ''}>{el}см</li>)}
+                        {sizes.map((el, i) => <li key={i} onClick={() => setActiveSize(el)}
+                                                  className={activeSize === el ? 'active' : ''}>{el}см</li>)}
                     </ul>
                 </div>
                 <div className="pizza-block__bottom">
@@ -60,7 +66,7 @@ const PizzaBlock = ({id, title, types, imageUrl, sizes, price,}) => {
                                 fill="white"
                             />
                         </svg>
-                        <span >Добавить</span>
+                        <span>Добавить</span>
                         {addedItem > 0 && <i>{addedItem}</i>}
                     </div>
                 </div>

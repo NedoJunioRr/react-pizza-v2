@@ -1,44 +1,56 @@
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {setSortNumber, setSortValue} from "../features/featureSlice";
 import {useDispatch, useSelector} from "react-redux";
-export const categories = [
-    {name:'Популярности(desc)',property:'rating'},
-    {name:'Популярности(asc)',property:'-rating'},
-    {name:'Цене(desc)',property: 'price'},
-    {name:'Цене(asc)',property: '-price'},
-    {name:'Алфавиту(desc)',property: 'title'},
-    {name:'Алфавиту(asc)',property: '-title'}
+
+type categoriesItem = {
+    name: string,
+    property:string
+}
+
+type PopUpClick = MouseEvent & {
+    path: Node[]
+}
+
+export const categories:categoriesItem[] = [
+    {name: 'Популярности(desc)', property: 'rating'},
+    {name: 'Популярности(asc)', property: '-rating'},
+    {name: 'Цене(desc)', property: 'price'},
+    {name: 'Цене(asc)', property: '-price'},
+    {name: 'Алфавиту(desc)', property: 'title'},
+    {name: 'Алфавиту(asc)', property: '-title'}
 ];
 
-const Sort = () => {
+const Sort:React.FC = () => {
     const dispatch = useDispatch()
-    const sortRef=useRef()
+    const sortRef = useRef<HTMLDivElement>(null)
 
-    const sortValue = useSelector((state)=>state.featureSlice.sort.value)
-    const selectItem = useSelector((state)=>state.featureSlice.sort.number)
+    const selectItem = useSelector((state) => state.featureSlice.sort.number)
 
     const [sortPop, setSortPop] = useState(false)
 
     const sortName = categories[selectItem].name
 
-    const activeCategories = (i) => {
+    const activeCategories = (i:number) => {
         dispatch(setSortNumber(i))
         setSortPop(false)
         dispatch(setSortValue(categories[i].property))
     }
 
-    useEffect(()=>{
-        const handleClick = (event) => {
-            if(!event.path.includes(sortRef.current)){
+
+
+    React.useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            const _event = event as PopUpClick;
+
+            if (sortRef.current && !_event.path.includes(sortRef.current)) {
                 setSortPop(false)
             }
-        }
-        document.body.addEventListener('click',handleClick)
-        return () =>{
-             document.body.removeEventListener('click',handleClick)
-        }
+        };
 
-    },[])
+        document.body.addEventListener('click', handleClickOutside);
+
+        return () => document.body.removeEventListener('click', handleClickOutside);
+    }, []);
 
 
     return (
@@ -62,7 +74,7 @@ const Sort = () => {
             <div className="sort__popup">
                 <ul>
                     {sortPop && categories.map((el, i) => {
-                        return <li onClick={() => activeCategories(i)}  key={i}
+                        return <li onClick={() => activeCategories(i)} key={i}
                                    className={selectItem === i ? 'active' : ''}>{el.name}</li>
                     })}
                 </ul>

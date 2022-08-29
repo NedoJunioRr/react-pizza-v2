@@ -1,15 +1,14 @@
-import React, {useContext, useRef} from 'react';
+import React, { useRef} from 'react';
 import Categories from "./Categories";
 import Sort, {categories} from "./Sort";
 import Skeleton from "./PizzaBlock/Skeleton";
 import PizzaBlock from "./PizzaBlock";
 import Pagination from "./Pagination/Pagination";
-import {SearchContext} from "../App";
 import {useDispatch, useSelector} from "react-redux";
 import {setCategoryId, setCurrentPage, setFilter} from "../features/featureSlice";
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import qs from "qs";
-import {fetchPizzas, pizzaState, setPizzas} from "../features/pizzaSlice";
+import {fetchPizzas, pizzaState} from "../features/pizzaSlice";
 
 
 const Home = () => {
@@ -63,34 +62,34 @@ const Home = () => {
         if (window.location.search) {
             const parsingItems = qs.parse((window.location.search).substring(1))
             let countNumInCategories = categories.findIndex(el => el.property === parsingItems.sortValue)
-            const findNumInCategories = {number: countNumInCategories, value: sortValue}
-            dispatch(setFilter({...parsingItems, findNumInCategories}))
+            const sort = {number: countNumInCategories, value: sortValue}
+            dispatch(setFilter({...parsingItems, sort}))
         }
     }, [])
 
 
     const skeletons = [...new Array(6)].map((el, i) => <Skeleton key={i}/>);
     const pizzasArr = pizzas.map(obj => {
-        return <Link to={`/pizza/${obj.id}`}><PizzaBlock  {...obj}/></Link>
+        return <PizzaBlock  {...obj}/>
     });
 
     return (
         <div className="container">
             <div className="content__top">
                 <Categories pizzaCategoryIndex={pizzaCategoryIndex}
-                            changeCategory={(index) => dispatch(setCategoryId(index))}/>
+                            changeCategory={(index:number) => dispatch(setCategoryId(index))}/>
                 <Sort/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
             {status === 'error' ?(
                 <div className="content__error-info">
-                    <h2>Произошла ошибка <icon>😕</icon></h2>
+                    <h2>Произошла ошибка <span>😕</span></h2>
                     <p>
                         Повторите позже.<br/>
                     </p>
                 </div>)
                 : (<div className="content__items">{status === 'loading' ? skeletons : pizzasArr}</div>)}
-            <Pagination onChange={(number) => dispatch(setCurrentPage(number))}/>
+            <Pagination onChange={(number:number) => dispatch(setCurrentPage(number))}/>
         </div>
     );
 };

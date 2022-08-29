@@ -5,7 +5,7 @@ import {clearItems} from "../features/cartSlice";
 import EmptyCart from "./EmptyCart";
 
 
-const Cart = () => {
+const Cart:React.FC = () => {
     const items = useSelector(state => state.cart.items)
     const {totalPrice} = useSelector(state => state.cart)
     const dispatch = useDispatch()
@@ -14,7 +14,7 @@ const Cart = () => {
         return <EmptyCart/>
     }
 
-    const totalCount = items.reduce((acc,el)=>acc+el.count,0)
+    const totalCount = items.reduce((acc:number,el:any)=>acc+el.count,0)
     return (
         <div className="cart">
             <div className="cart__top">

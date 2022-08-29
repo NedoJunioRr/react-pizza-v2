@@ -1,9 +1,8 @@
-import React, {useRef, useState, useContext, useCallback} from 'react';
+import React, {useRef, useState, useCallback} from 'react';
 import {FcSearch} from "react-icons/fc";
 import styles from './Search.module.scss'
 import {AiOutlineClose} from "react-icons/ai";
 import debounce from 'lodash.debounce'
-import {SearchContext} from "../../App";
 import {useDispatch} from "react-redux";
 import {setSearchValue} from "../../features/featureSlice";
 
@@ -14,11 +13,11 @@ const Search = () => {
 
 
 
-    const inputRef = useRef()
+    const inputRef = useRef<HTMLInputElement>(null)
 
     const closeIconUse = () =>{
         setInputValue('')
-        inputRef.current.focus()
+        inputRef.current?.focus()
     }
 
     const changeInputValue =  useCallback(
@@ -26,7 +25,7 @@ const Search = () => {
         dispatch(setSearchValue(string))
     },500), [])
 
-    const onChangeInput = (event) =>{
+    const onChangeInput = (event:React.ChangeEvent<HTMLInputElement>) =>{
         setInputValue(event.target.value)
         changeInputValue(event.target.value)
     }

@@ -1,18 +1,19 @@
 import {Link, useLocation} from "react-router-dom";
 import Search from "./Search";
 import {useSelector} from "react-redux";
+import logo from '../../public/img/pizza-logo.svg'
 
 
 const Header = () => {
     const {items,totalPrice} = useSelector(state=>state.cart)
-    const totalCount = items.reduce((acc,el)=>acc+el.count,0)
+    const totalCount = items.reduce((acc:number,el:any)=>acc+el.count,0)
     const location = useLocation();
     return (
         <div className="header">
             <div className="container">
                 <Link to='/'>
                     <div className="header__logo">
-                        <img width="38" src="/img/pizza-logo.svg" alt="Pizza logo"/>
+                        <img width="38" src={logo} alt="Pizza logo"/>
                         <div>
                             <h1>React Pizza</h1>
                             <p>самая вкусная пицца во вселенной</p>

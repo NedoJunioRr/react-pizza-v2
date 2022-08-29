@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 
-const PizzaForId = () => {
+const PizzaForId:React.FC = () => {
     const {id} = useParams()
-    const [pizza, setPizza] = useState()
+    const [pizza, setPizza] = useState<{imageUrl:string,price:number, title:string}>()
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -14,7 +15,8 @@ const PizzaForId = () => {
                 const {data} = await axios.get(`https://62fe4adca85c52ee483464b0.mockapi.io/pizzas/${id}`)
                 setPizza(data)
             } catch (e) {
-                console.log(e);
+                alert('Пицца не найдена');
+                navigate('/')
             }
         }
 
