@@ -192,6 +192,23 @@ body {
             display: none;
           }
         }
+        &--disabled{
+          opacity: 0.4;
+          border-color: #7b7b7b;
+          svg path{
+            fill: #7b7b7b;
+          }
+        }
+
+
+
+        &--disabled:hover{
+          transform: none;
+          background: transparent;
+          svg path{
+            fill: #7b7b7b;
+          }
+        }
       }
 
       b {

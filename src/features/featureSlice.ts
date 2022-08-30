@@ -6,7 +6,7 @@ type Sort = {
 }
 
 interface FeatureSliceState {
-    searchValue: string
+    searchValue?: string,
     pizzaCategoryIndex: number,
     sort: Sort,
     currentPage: number,
@@ -39,7 +39,7 @@ export const featureSlice = createSlice({
         setCurrentPage(state, action:PayloadAction<number>) {
             state.currentPage = action.payload
         },
-        setFilter(state, action:PayloadAction<FeatureSliceState>) {
+        setFilter(state, action:PayloadAction<FeatureSliceState >) {
             state.pizzaCategoryIndex = Number(action.payload.pizzaCategoryIndex)
             state.currentPage = Number(action.payload.currentPage)
             state.sort = action.payload.sort

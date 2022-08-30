@@ -1,66 +1,78 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit'
 import axios from "axios";
 import {RootState} from '../redux/store'
+import {CartItemValues} from "./CartSlice";
 
-export const fetchPizzas = createAsyncThunk('pizza/fetchByPizzas', async ({
-                                                                              category,
-                                                                              checkSearchValue,
-                                                                              checkOrder,
-                                                                              checkSort,
-                                                                              currentPage
-                                                                          }) => {
-        const {data} = await axios.get(`https://62fe4adca85c52ee483464b0.mockapi.io/pizzas?${category}&sortBy=${checkSort}&order=${checkOrder}&${checkSearchValue}&page=${currentPage}&limit=4`)
-        return data
+export type fetchPizzasProps = Record<string, string>
+
+//createAsyncThunk<Pizza[],Record<string, string>>
+
+export const fetchPizzas = createAsyncThunk<Pizza[],fetchPizzasProps>('pizza/fetchByPizzas', async (params: fetchPizzasProps) => {
+        const {
+            category,
+            checkSearchValue,
+            checkOrder,
+            checkSort,
+            currentPage
+        } = params
+        const {data} = await axios.get<Pizza[]>(`https://62fe4adca85c52ee483464b0.mockapi.io/pizzas?${category}&sortBy=${checkSort}&order=${checkOrder}&${checkSearchValue}&page=${currentPage}&limit=4`)
+        return data as Pizza[]
     }
 )
+
+enum Status {
+    loading = 'loading',
+    success = 'success',
+    error = 'error'
+}
 
 type Pizza = {
     id: string,
     title: string,
-    type: string,
-    price: number,
-    count: number,
+    types: number[],
     imageUrl: string,
-    size: number
+    sizes: number[],
+    price: number
 }
 
 interface PizzaSliceState {
     pizzas: Pizza[],
-    status:'loading' | 'success' | 'error'
+    status: 'loading' | 'success' | 'error'
 }
 
 
-const initialState:PizzaSliceState = {
+const initialState: PizzaSliceState = {
     pizzas: [],
-    status:'loading'
+    status: 'loading'
 }
 
 export const pizzasSlice = createSlice({
     name: 'pizza',
     initialState,
     reducers: {
-        setPizzas(state, action) {
+        setPizzas(state, action: PayloadAction<Pizza[]>) {
             state.pizzas = action.payload
         },
     },
 
-    extraReducers: {
-        [fetchPizzas.pending]: (state, action) => {
-            state.status = 'loading'
-            state.items = []
-        },
-        [fetchPizzas.fulfilled]: (state, action) => {
+    extraReducers: (builder) => {
+        builder.addCase(fetchPizzas.pending, (state, action) => {
+            state.status = Status.loading
+            state.pizzas = []
+        })
+        builder.addCase(fetchPizzas.fulfilled, (state, action) => {
+            state.status = Status.success
             state.pizzas = action.payload
-            state.status = 'success'
-        },
-        [fetchPizzas.rejected]: (state, action) => {
-            state.status = 'error'
-            state.items=[]
-        },
-    },
+
+        })
+        builder.addCase(fetchPizzas.rejected, (state, action) => {
+            state.status = Status.error
+            state.pizzas = []
+        })
+    }
 })
 
-export const pizzaState = (state:RootState) => state.pizza;
+export const pizzaState = (state: RootState) => state.pizza;
 
 export const {setPizzas} = pizzasSlice.actions
 

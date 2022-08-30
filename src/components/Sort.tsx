@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import {setSortNumber, setSortValue} from "../features/featureSlice";
 import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../redux/store";
 
 type categoriesItem = {
     name: string,
@@ -20,11 +21,11 @@ export const categories:categoriesItem[] = [
     {name: 'Алфавиту(asc)', property: '-title'}
 ];
 
-const Sort:React.FC = () => {
+const Sort:React.FC = React.memo(()=> {
     const dispatch = useDispatch()
     const sortRef = useRef<HTMLDivElement>(null)
 
-    const selectItem = useSelector((state) => state.featureSlice.sort.number)
+    const selectItem = useSelector((state:RootState) => state.featureSlice.sort.number)
 
     const [sortPop, setSortPop] = useState(false)
 
@@ -81,6 +82,6 @@ const Sort:React.FC = () => {
             </div>
         </div>
     );
-};
+})
 
 export default Sort;

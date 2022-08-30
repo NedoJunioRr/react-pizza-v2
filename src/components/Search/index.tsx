@@ -5,6 +5,7 @@ import {AiOutlineClose} from "react-icons/ai";
 import debounce from 'lodash.debounce'
 import {useDispatch} from "react-redux";
 import {setSearchValue} from "../../features/featureSlice";
+import {fetchPizzas} from "../../features/pizzaSlice";
 
 const Search = () => {
 
@@ -19,6 +20,7 @@ const Search = () => {
         setInputValue('')
         inputRef.current?.focus()
     }
+
 
     const changeInputValue =  useCallback(
         debounce(string=> {

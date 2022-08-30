@@ -1,12 +1,12 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addItems, cartItemById, CartItemValues} from "../../features/cartSlice";
+import {addItems, cartItemById, CartItemValues} from "../../features/CartSlice";
 import {Link} from "react-router-dom";
 
 
 const typesPizzas = ["тонкое", "традиционное"];
 
-type PropsPizzaBlock = {id:string, title:string, types:number[], imageUrl:string, sizes:number[], price:number}
+export type PropsPizzaBlock = {id:string, title:string, types:number[], imageUrl:string, sizes:number[], price:number}
 
 const PizzaBlock:React.FC<PropsPizzaBlock> = ({id, title, types, imageUrl, sizes, price,}) => {
     const cartItem = useSelector(cartItemById(id))

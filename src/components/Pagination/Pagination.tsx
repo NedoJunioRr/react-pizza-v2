@@ -2,14 +2,15 @@ import React from 'react';
 import ReactPaginate from "react-paginate";
 import styles from "./Pagination.module.scss";
 import {useSelector} from "react-redux";
+import {RootState} from "../../redux/store";
 
 type PaginateProps = {
-    currentPage: number,
+    // currentPage: number,
     onChange: (page:number) => void
 }
 
-const Pagination: React.FC<PaginateProps> = ({onChange}) => {
-    const {currentPage} = useSelector(state => state.featureSlice)
+const Pagination:React.FC<PaginateProps>= ({onChange}) => {
+    const {currentPage} = useSelector((state:RootState) => state.featureSlice)
     return (
         <div>
             <ReactPaginate className={styles.root}

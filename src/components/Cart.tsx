@@ -1,14 +1,15 @@
 import React from 'react';
 import CartItem from "./CartItem";
-import {useDispatch, useSelector} from "react-redux";
-import {clearItems} from "../features/cartSlice";
+import {useSelector} from "react-redux";
+import {clearItems} from "../features/CartSlice";
 import EmptyCart from "./EmptyCart";
+import {RootState, useAppDispatch} from "../redux/store";
 
 
 const Cart:React.FC = () => {
-    const items = useSelector(state => state.cart.items)
-    const {totalPrice} = useSelector(state => state.cart)
-    const dispatch = useDispatch()
+    const items = useSelector((state:RootState) => state.cart.items)
+    const {totalPrice} = useSelector((state:RootState)  => state.cart)
+    const dispatch = useAppDispatch()
 
     if(!totalPrice){
         return <EmptyCart/>
